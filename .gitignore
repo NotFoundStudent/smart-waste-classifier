@@ -28,6 +28,8 @@ models/metrics.json
 # Dataset: use DVC to manage data versions
 data/*
 !data/.gitkeep
+!data/.gitignore
+!data/*.dvc
 
 # MLflow local tracking data
 mlflow.db
