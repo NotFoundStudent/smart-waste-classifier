@@ -1,4 +1,3 @@
-
 from pathlib import Path
 
 import pandas as pd
@@ -23,9 +22,7 @@ def load_dataset(data_path=DEFAULT_DATA_PATH):
     required_columns = FEATURE_COLUMNS + [TARGET_COLUMN]
     missing_columns = set(required_columns) - set(df.columns)
     if missing_columns:
-        raise ValueError(
-            f"Dataset is missing columns: {sorted(missing_columns)}"
-        )
+        raise ValueError(f"Dataset is missing columns: {sorted(missing_columns)}")
 
     df = df[required_columns].copy()
 

@@ -1,4 +1,3 @@
-
 import pytest
 
 from app.main import predict_category
@@ -12,9 +11,7 @@ class FakeModel:
 
 
 def test_valid_input_returns_category():
-    result = predict_category(
-        30, 12, 0, model=FakeModel()
-    )
+    result = predict_category(30, 12, 0, model=FakeModel())
     assert result == "plastic"
 
 
@@ -28,13 +25,9 @@ def test_valid_input_returns_category():
         (30, 12, 2),
     ],
 )
-def test_invalid_numeric_ranges_are_rejected(
-    weight, moisture, magnetic
-):
+def test_invalid_numeric_ranges_are_rejected(weight, moisture, magnetic):
     with pytest.raises(ValueError):
-        predict_category(
-            weight, moisture, magnetic, model=FakeModel()
-        )
+        predict_category(weight, moisture, magnetic, model=FakeModel())
 
 
 @pytest.mark.parametrize(
@@ -45,10 +38,6 @@ def test_invalid_numeric_ranges_are_rejected(
         (30, 12, True),
     ],
 )
-def test_invalid_types_are_rejected(
-    weight, moisture, magnetic
-):
+def test_invalid_types_are_rejected(weight, moisture, magnetic):
     with pytest.raises(ValueError):
-        predict_category(
-            weight, moisture, magnetic, model=FakeModel()
-        )
+        predict_category(weight, moisture, magnetic, model=FakeModel())

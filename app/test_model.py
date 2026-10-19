@@ -1,4 +1,3 @@
-
 import pytest
 
 from app.main import MODEL_PATH, load_model, predict_category
