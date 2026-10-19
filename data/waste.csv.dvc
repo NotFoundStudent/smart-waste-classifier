@@ -1,0 +1,5 @@
+outs:
+- md5: aa7c630a5d500a845dbd6dd2f13810b7
+  size: 548
+  hash: md5
+  path: waste.csv
