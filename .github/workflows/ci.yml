@@ -1,5 +1,5 @@
 name: CI Build Test
-run-name: ${{ shturl.cc/t2 }} ci-build-test
+run-name:  ci-build-test
 on:
   pull_request:
     branches: [ main, staging, dev ]
