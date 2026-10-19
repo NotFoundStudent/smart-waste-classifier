@@ -1,0 +1,58 @@
+name: CI Build Test
+run-name: ci-build-test
+on:
+  pull_request:
+    branches: [main, staging, dev]
+
+jobs:
+  ci-build-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: "pip"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install "dvc[azure]"
+
+      - name: Pull dataset from Azure (DVC)
+        env:
+          AZURE_ACCOUNT_NAME: ${{ secrets.AZURE_ACCOUNT_NAME }}
+          AZURE_SAS_TOKEN: ${{ secrets.AZURE_SAS_TOKEN }}
+        run: |
+          dvc remote modify --local myazure url azure://dvc/smart-waste-classifier/
+          dvc remote modify --local myazure account_name "$AZURE_ACCOUNT_NAME"
+          dvc remote modify --local myazure sas_token "$AZURE_SAS_TOKEN"
+          dvc pull
+
+      - name: Train model (generate artifact for app tests)
+        run: python ml/train.py
+
+      - name: Run linter (ruff static analysis)
+        run: ruff check .
+
+      - name: Run format check (black)
+        run: black --check .
+
+      - name: Run full test suite (pytest)
+        run: python -m pytest app/ -v
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build docker image (validate build only, no push)
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          load: true
+          tags: waste-app:ci-test
+          push: false
+
