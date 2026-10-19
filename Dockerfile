@@ -12,5 +12,6 @@ COPY ./app ./app
 COPY ./ml ./ml
 
 RUN mkdir -p /app/models
+COPY models/ /app/models/
 
 CMD ["python","app/main.py"]

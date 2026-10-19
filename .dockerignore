@@ -18,7 +18,6 @@ data/
 .dvc/cache
 .dvc/config.local
 
-models/
 
 *.md
 !README.md
