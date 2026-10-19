@@ -1,0 +1,30 @@
+
+# Python cache
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Secrets and local environment files
+.env
+.env.*
+!.env.example
+
+# IDE and operating system files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Generated model artifacts
+models/*.joblib
+models/*.pkl
+models/metrics.json
+
+# Dataset: use DVC to manage data versions
+data/*
+!data/.gitkeep
