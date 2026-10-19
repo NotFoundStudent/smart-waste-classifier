@@ -23,6 +23,7 @@ jobs:
           pip install -r requirements.txt
           pip install "dvc[azure]"
 
+      
       - name: Pull dataset from Azure (DVC)
         env:
           AZURE_ACCOUNT_NAME: ${{ secrets.AZURE_ACCOUNT_NAME }}
@@ -32,6 +33,20 @@ jobs:
           dvc remote modify --local myazure account_name "$AZURE_ACCOUNT_NAME"
           dvc remote modify --local myazure sas_token "$AZURE_SAS_TOKEN"
           dvc pull
+
+          echo "=== Checking dataset after dvc pull ==="
+          if [ -f data/waste.csv ]; then
+            echo "SUCCESS: data/waste.csv exists"
+            wc -c data/waste.csv
+          else
+            echo "ERROR: data/waste.csv is missing"
+            echo "=== Contents of data directory ==="
+            ls -la data/ || true
+            echo "=== DVC status ==="
+            dvc status -c || true
+            exit 1
+          fi
+
 
       - name: Train model (generate artifact for app tests)
         run: python ml/train.py
