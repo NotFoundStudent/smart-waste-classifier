@@ -34,7 +34,7 @@ jobs:
           echo "=== DVC tracked files ==="
           cat data/waste.csv.dvc
           echo "=== Pull dataset ==="
-          dvc pull -v
+          dvc pull -v data/waste.csv.dvc
           echo "=== Verify dataset ==="
           ls -lah data/
           if [ ! -s data/waste.csv ]; then
