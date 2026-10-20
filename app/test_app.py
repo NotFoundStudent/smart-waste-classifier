@@ -41,3 +41,12 @@ def test_invalid_numeric_ranges_are_rejected(weight, moisture, magnetic):
 def test_invalid_types_are_rejected(weight, moisture, magnetic):
     with pytest.raises(ValueError):
         predict_category(weight, moisture, magnetic, model=FakeModel())
+
+
+def test_unknown_model_category_is_rejected():
+    class UnknownCategoryModel:
+        def predict(self, features):
+            return ["unknown"]
+
+    with pytest.raises(ValueError, match="unknown category"):
+        predict_category(30, 12, 0, model=UnknownCategoryModel())
