@@ -78,9 +78,9 @@ def train_model(experiment_name="smart-waste-classifier", c_value=1.0):
             {
                 "model_type": "LogisticRegression",
                 "C": c_value,
-                "max_iter": 1000,
-                "test_size": 0.25,
-                "random_state": 42,
+                "max_iter": 2000,
+                "test_size": 0.7,
+                "random_state": 89,
                 "scaler": "StandardScaler",
                 "dataset_rows": len(df),
                 "train_samples": len(y_train),
