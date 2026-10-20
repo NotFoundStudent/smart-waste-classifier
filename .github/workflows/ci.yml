@@ -23,12 +23,11 @@ jobs:
           pip install -r requirements.txt
           pip install "dvc[azure]"
 
-      - name: Pull dataset from Azure (DVC)
+           - name: Pull dataset from Azure (DVC)
         env:
           AZURE_ACCOUNT_NAME: ${{ secrets.AZURE_ACCOUNT_NAME }}
           AZURE_SAS_TOKEN: ${{ secrets.AZURE_SAS_TOKEN }}
         run: |
-                  run: |
           dvc remote modify --local myazure url azure://dvc/smart-waste-classifier/
           dvc remote modify --local myazure account_name "$AZURE_ACCOUNT_NAME"
           dvc remote modify --local myazure sas_token "$AZURE_SAS_TOKEN"
