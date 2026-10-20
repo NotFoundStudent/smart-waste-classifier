@@ -23,7 +23,7 @@ jobs:
           pip install -r requirements.txt
           pip install "dvc[azure]"
 
-           - name: Pull dataset from Azure (DVC)
+      - name: Pull dataset from Azure (DVC)
         env:
           AZURE_ACCOUNT_NAME: ${{ secrets.AZURE_ACCOUNT_NAME }}
           AZURE_SAS_TOKEN: ${{ secrets.AZURE_SAS_TOKEN }}
